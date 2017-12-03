@@ -1,0 +1,10 @@
+[package]
+
+name = "aoc2017"
+version = "0.0.1"
+authors = [ "Anthony Martin <antm88@gmail.com>" ]
+
+[dependencies]
+config = "0.6"
+log = "0.3"
+env_logger = "0.3"
