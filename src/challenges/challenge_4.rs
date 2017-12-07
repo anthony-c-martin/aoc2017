@@ -1,34 +1,5 @@
-use std::collections::hash_map::HashMap;
 use std::iter::FromIterator;
-
-struct TrieNode {
-    is_end: bool,
-    children: HashMap<char, TrieNode>
-}
-
-impl TrieNode {
-    pub fn new() -> TrieNode {
-        TrieNode {
-            is_end: false,
-            children: HashMap::new()
-        }
-    }
-
-    pub fn insert_check_dupe(&mut self, input: &str) -> bool {
-        if input.is_empty() {
-            if !self.is_end {
-                self.is_end = true;
-                return false;
-            }
-
-            return true;
-        }
-
-        self.children.entry(input.chars().nth(0).unwrap())
-            .or_insert(TrieNode::new())
-            .insert_check_dupe(&input[1..])
-    }
-}
+use utils::TrieNode;
 
 pub fn execute(input: &str) {
     let result_a = challenge_a(input);
@@ -55,7 +26,7 @@ fn count_valid_passphrases(passphrases: Vec<Vec<String>>) -> i32 {
         let mut has_dupes = false;
 
         for word in passphrase {
-            has_dupes |= root_node.insert_check_dupe(word.as_str());
+            has_dupes |= root_node.insert_check_dupe(word.as_bytes());
         }
 
         if !has_dupes {
