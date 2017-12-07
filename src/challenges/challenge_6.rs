@@ -3,14 +3,22 @@ use utils::*;
 pub fn execute(input: &str) {
     let result_a = challenge_a(input);
     println!("Challenge 6a: {}", result_a);
+    let result_b = challenge_b(input);
+    println!("Challenge 6b: {}", result_b);
 }
 
 fn challenge_a(input: &str) -> i32 {
-    let instructions = parse_tabbed_data(input);
-    do_memory_allocation(instructions)
+    let mut instructions = parse_tabbed_data(input);
+    do_memory_allocation(&mut instructions)
 }
 
-fn do_memory_allocation(mut instructions: Vec<i32>) -> i32 {
+fn challenge_b(input: &str) -> i32 {
+    let mut instructions = parse_tabbed_data(input);
+    do_memory_allocation(&mut instructions);
+    do_memory_allocation(&mut instructions)
+}
+
+fn do_memory_allocation(instructions: &mut Vec<i32>) -> i32 {
     let mut root_node = TrieNode::new();
 
     let mut count = 0;
