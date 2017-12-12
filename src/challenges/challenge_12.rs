@@ -3,8 +3,8 @@ use std::collections::HashMap;
 pub fn execute(input: &str) {
     let result_a = challenge_a(input);
     println!("Challenge 12a: {}", result_a);
-    //let result_b = challenge_b(input);
-    //println!("Challenge 12b: {}", result_b);
+    let result_b = challenge_b(input);
+    println!("Challenge 12b: {}", result_b);
 }
 
 fn challenge_a(input: &str) -> i32 {
@@ -14,6 +14,15 @@ fn challenge_a(input: &str) -> i32 {
     }
 
     count_programs(&mut pipes, 0)
+}
+
+fn challenge_b(input: &str) -> i32 {
+    let mut pipes = HashMap::new();
+    for line in input.lines() {
+        store_pipe(line, &mut pipes);
+    }
+
+    count_unique_pipes(&mut pipes)
 }
 
 fn count_programs(pipes: &mut HashMap<i32, ProgramNode>, from_program: i32) -> i32 {
@@ -35,6 +44,25 @@ fn count_programs(pipes: &mut HashMap<i32, ProgramNode>, from_program: i32) -> i
             program_queue.push(child);
         }
     }
+    count
+}
+
+fn count_unique_pipes(pipes: &mut HashMap<i32, ProgramNode>) -> i32 {
+    let mut count = 0;
+    let program_pids = pipes.keys().map(|&v| v).collect::<Vec<i32>>();
+    for program_pid in program_pids {
+        {
+            let program = pipes.get(&program_pid).unwrap();
+
+            if program.visited {
+                continue;
+            }
+        }
+
+        count_programs(pipes, program_pid);
+        count += 1;
+    }
+
     count
 }
 
