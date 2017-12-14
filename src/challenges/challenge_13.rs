@@ -2,7 +2,7 @@ pub fn execute(input: &str) {
     let result_a = challenge_a(input);
     println!("Challenge 13a: {}", result_a);
     let result_b = challenge_b(input);
-    println!("Challenge 12b: {}", result_b);
+    println!("Challenge 13b: {}", result_b);
 }
 
 fn get_layer(line: &str) -> (i32, i32) {
